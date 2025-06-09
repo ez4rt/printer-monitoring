@@ -1,0 +1,350 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}АИС Мониторинг принтеров{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-sm-6">
+            <div class="widget-stat card">
+                <div class="card-body p-4">
+                    <div class="media ai-icon">
+                        <span class="mr-3">
+                            <svg id="icon-orders" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </span>
+                        <div class="media-body" style="overflow: hidden; overflow-wrap: break-word;">
+                            <p class="mb-1">Общее количество страниц</p>
+                            <h4 class="mb-0" style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ sum_total_page }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-sm-6">
+            <div class="widget-stat card">
+                <div class="card-body p-4">
+                    <div class="media ai-icon">
+                        <span class="mr-3">
+                            <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                <path d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z" fill-rule="nonzero" transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) "/>
+                                <path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill-rule="nonzero" opacity="0.3"/>
+                            </svg>
+                        </span>
+                        <div class="media-body" style="overflow: hidden;">
+                            <p class="mb-1">Всего напечатано страниц</p>
+                            <h4 class="mb-0" style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ sum_total_print }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-sm-6">
+            <div class="widget-stat card">
+                <div class="card-body  p-4">
+                    <div class="media ai-icon">
+                        <span class="mr-3">
+                            <svg id="icon-revenue" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                <path d="M5,6 L19,6 C19.5522847,6 20,6.44771525 20,7 L20,17 L4,17 L4,7 C4,6.44771525 4.44771525,6 5,6 Z"/>
+                                <rect opacity="0.3" x="1" y="18" width="22" height="1" rx="0.5"/>
+                            </svg>
+                        </span>
+                        <div class="media-body" style="overflow: hidden;">
+                            <p class="mb-1">Всего отсканировано страниц</p>
+                            <h4 class="mb-0" style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ sum_total_scan }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-sm-6">
+            <div class="widget-stat card">
+                <div class="card-body p-4">
+                    <div class="media ai-icon">
+                        <span class="mr-3">
+                            <svg id="icon-database-widget" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database">
+                                <path d="M15.9956071,6 L9,6 C7.34314575,6 6,7.34314575 6,9 L6,15.9956071 C4.70185442,15.9316381 4,15.1706419 4,13.8181818 L4,6.18181818 C4,4.76751186 4.76751186,4 6.18181818,4 L13.8181818,4 C15.1706419,4 15.9316381,4.70185442 15.9956071,6 Z" fill-rule="nonzero" opacity="0.3"/>
+                                <path d="M10.1818182,8 L17.8181818,8 C19.2324881,8 20,8.76751186 20,10.1818182 L20,17.8181818 C20,19.2324881 19.2324881,20 17.8181818,20 L10.1818182,20 C8.76751186,20 8,19.2324881 8,17.8181818 L8,10.1818182 C8,8.76751186 8.76751186,8 10.1818182,8 Z"/>
+                            </svg>
+                        </span>
+                        <div class="media-body" style="overflow: hidden;">
+                            <p class="mb-1">Общее количество копий</p>
+                            <h4 class="mb-0" style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ sum_total_copies }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-xxl-6 col-sm-6">
+            <div class="widget-stat card bg-secondary">
+                <div class="card-body p-4">
+                    <div class="media">
+                        <div class="media-body text-white">
+                            <p class="mb-1">Общее количество страниц за день</p>
+                            <div>
+                                <h3 class="text-white" style="display: inline; margin-left: 5px;">{{ sum_total_daily_page }}</h3>
+                                <span class="badge badge-success" style="float: left;">{{ percent_daily_pages }}%</span>
+                            </div>
+                            <span class="badge badge-success" style="float: right;">{{ percent_daily_print }}%</span>
+                            <h3 class="text-white" style="text-align: right;">{{ sum_total_daily_print }}</h3>
+                            <p class="mb-1" style="text-align: right;">Всего напечатано страниц за день</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-xxl-6 col-sm-6">
+            <div class="widget-stat card bg-danger">
+                <div class="card-body p-4">
+                    <div class="media">
+                        <div class="media-body text-white">
+                            <p class="mb-1">Всего отсканировано за день</p>
+                            <div>
+                                <h3 class="text-white" style="display: inline; margin-left: 5px;">{{ sum_total_daily_scan }}</h3>
+                                <span class="badge badge-warning" style="float: left;">{{ percent_daily_scan }}%</span>
+                            </div>
+                            <span class="badge badge-warning" style="float: right;">{{ percent_daily_copies }}%</span>
+                            <h3 class="text-white" style="text-align: right;">{{ sum_total_daily_copies }}</h3>
+                            <p class="mb-1" style="text-align: right;">Общее количество копий за день</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6"  style="clear: both;">
+            <div class="card bg-primary overflow-hidden">
+                <div class="card-body pb-0 px-4 pt-4">
+                    <div class="row">
+                        <div class="col text-white">
+                            <h5 class="text-white mb-1">{{sum_total_weekly_page}}</h5>
+                            <span>Всего страниц за неделю</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-wrapper px-2">
+                    <canvas id="chart_widget_2_1" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+            <div class="card bg-primary overflow-hidden">
+                <div class="card-body pb-0 px-4 pt-4">
+                    <div class="row">
+                        <div class="col text-white">
+                            <h5 class="text-white mb-1">{{sum_total_weekly_print}}</h5>
+                            <span>Напечатано за неделю</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-wrapper px-2">
+                    <canvas id="chart_widget_2_2" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+            <div class="card bg-primary overflow-hidden">
+                <div class="card-body pb-0 px-4 pt-4">
+                    <div class="row">
+                        <div class="col text-white">
+                            <h5 class="text-white mb-1">{{sum_total_weekly_scan}}</h5>
+                            <span>Отсканировано за неделю</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-wrapper px-2">
+                    <canvas id="chart_widget_2_3" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+            <div class="card bg-primary overflow-hidden">
+                <div class="card-body pb-0 px-4 pt-4">
+                    <div class="row">
+                        <div class="col text-white">
+                            <h5 class="text-white mb-1">{{sum_total_weekly_copies}}</h5>
+                            <span>Сделано копий за неделю</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-wrapper px-2">
+                    <canvas id="chart_widget_2_4" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8 col-xxl-8 col-lg-12 col-sm-12">
+            <div id="user-activity" class="card">
+                <div class="card-header border-0 pb-0 d-sm-flex d-block">
+                    <div>
+                        <h4 class="card-title">СТАТИСТИКА ЗА МЕСЯЦ</h4>
+                        <p class="mb-1">Общее количество страниц: {{total_sum_all_printers.page__sum}}</p>
+                    </div>
+                    <div class="card-action">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#user" role="tab">
+                                    Печать
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#bounce" role="tab">
+                                    Скан
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#session-duration" role="tab">
+                                    Копии
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="user" role="tabpanel">
+                            <canvas id="activity" class="chartjs"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-xxl-4 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header border-0 pb-0">
+                    <h4 class="card-title">Последние события</h4>
+                </div>
+                <div class="card-body">
+                    <div id="DZ_W_TimeLine1" class="widget-timeline dz-scroll style-1" style="height:250px;">
+                        <ul class="timeline">
+                            {% for event in events_small %}
+                            <li>
+                                {% if event.type == 'Расходный материал' %}
+                                <div class="timeline-badge success"></div>
+                                <a class="timeline-panel">
+                                    <span>{{ event.action_time }}</span>
+                                    <h6 class="mb-0">{{ event.type }}: <strong class="text-success">{{ event.object_repr }}</strong></h6>
+                                    <p class="mb-0">{{ event.description }}</p>
+                                </a>
+                                {% elif event.type == 'Ошибка' %}
+                                <div class="timeline-badge danger"></div>
+                                <a class="timeline-panel">
+                                    <span>{{ event.action_time }}</span>
+                                    <h6 class="mb-0">{{ event.type }}: <strong class="text-warning">{{ event.object_repr }}</strong></h6>
+                                    <p class="mb-0">{{ event.description }}</p>
+                                </a>
+                                {% elif event.type == 'Информация' %}
+                                <div class="timeline-badge info"></div>
+                                <a class="timeline-panel">
+                                    <span>{{ event.action_time }}</span>
+                                    <h6 class="mb-0">{{ event.type }}: <strong class="text-info">{{ event.object_repr }}</strong></h6>
+                                    <p class="mb-0">{{ event.description }}</p>
+                                </a>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Принтеры</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="display" style="min-width: 1465px;">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <p style="display: inline-block;">Название</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-down.svg' %}" class="sort-icon">
+                                </th>
+                                <th>
+                                    <p style="display: inline-block;">IP-адрес</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                                </th>
+                                <th>
+                                    <p style="display: inline-block;">Статус</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                                </th>
+                                <th>
+                                    <p style="display: inline-block;">Район</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                                </th>
+                                <th>
+                                    <p style="display: inline-block;">Кабинет</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                                </th>
+                                <th>
+                                    <p style="display: inline-block;">Отдел</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                                </th>
+                                <th>
+                                    <p style="display: inline-block;">Ресурс тонера</p>
+                                    <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for printer_supply in printers_with_black_cart %}
+                            <tr>
+                                <td><a href={% url "monitoring:printer" printer_supply.printer.id %}> {{ printer_supply.printer.model }}</a></td>
+                                <td>{{ printer_supply.printer.ip_address }}</td>
+                                <td>{{ printer_supply.printer.get_is_active }}</td>
+                                <td>{{ printer_supply.printer.get_subnet_name }}</td>
+                                <td>{{ printer_supply.printer.location.cabinet.number }}</td>
+                                <td>{{ printer_supply.printer.location.department }}</td>
+                                <td>{{ printer_supply.remaining_supply_percentage }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% for printer in printers_without_black_cart %}
+                            <tr>
+                                <td><a href={% url "monitoring:printer" printer.id %}> {{ printer.model }}</a></td>
+                                <td>{{ printer.ip_address }}</td>
+                                <td>{{ printer.get_is_active }}</td>
+                                <td>{{ printer.get_subnet_name }}</td>
+                                <td>{{ printer.location.cabinet.number }}</td>
+                                <td>{{ printer.location.department }}</td>
+                                <td>-</td>
+                            </tr>
+                            {% endfor %}
+                            <tfoot>
+                        <tr>
+                            <th>Название</th>
+                            <th>IP-адрес</th>
+                            <th>Статус</th>
+                            <th>Район</th>
+                            <th>Кабинет</th>
+                            <th>Отдел</th>
+                            <th>Ресурс тонера</th>
+                        </tr>
+                        </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/dashboard/dashboard-1.js' %}"></script>
+{% endblock %}

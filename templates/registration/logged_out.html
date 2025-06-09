@@ -1,0 +1,10 @@
+{% extends 'registration/template.html' %}
+
+{% block title %}Выход из системы - АИС Мониторинг принтеров{% endblock %}
+
+{% block content %}
+<h4 class="text-center mb-4">Вы вышли из системы</h4>
+<div class="new-account mt-3" style="text-align: center;">
+    <p><a class="text-primary" href="{% url 'login'%}">Нажмите сюда, чтобы перейти в окно авторизации</a></p>
+</div>
+{% endblock %}

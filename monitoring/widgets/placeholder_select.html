@@ -1,0 +1,5 @@
+<select name="{{ widget.name }}" id="{{ widget.attrs.id }}" class="{{ widget.attrs.class }}">
+    {% for value, label in widget.choices %}
+        <option value="{{ value }}"{% if value == widget.value %} selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+</select>

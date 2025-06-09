@@ -1,0 +1,30 @@
+{% extends 'monitoring/single_report/report.html' %}
+
+{% block content %}
+<div style="overflow-x: auto;">
+    <table border="1" id="printTable">
+        <thead>
+            <tr>
+                <th>Время</th>
+                <th>Пользователь (Имя компьютера)</th>
+                <th>Принтер (IP-адрес)</th>
+                <th>Название документа</th>
+                <th>Кол-во страниц</th>
+                <th>Размер документа, Kb</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in print_log %}
+            <tr>
+                <td>{{ event.TimeCreated }}</td>
+                <td>{{ event.UserName }} ({{ event.PSComputerName }})</td>
+                <td>{{ event.PrinterName }} ({{ event.Port }})</td>
+                <td>{{ event.Document }}</td>
+                <td>{{ event.Pages }}</td>
+                <td>{{ event.PrintSizeKb }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

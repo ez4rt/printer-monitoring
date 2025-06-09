@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}События{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">События</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display" style="min-width: 1495px;">
+                        <thead>
+                        <tr>
+                            <th>
+                                <p style="display: inline-block;">Время</p>
+                                <img src="{% static 'icons/svgicons/Navigation/Up-down-down.svg' %}" class="sort-icon">
+                            </th>
+                            <th>
+                                <p style="display: inline-block;">Тип</p>
+                                <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                            </th>
+                            <th>
+                                <p style="display: inline-block;">Объект</p>
+                                <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                            </th>
+                            <th>
+                                <p style="display: inline-block;">Событие</p>
+                                <img src="{% static 'icons/svgicons/Navigation/Up-down-new.svg' %}" class="sort-icon">
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for event in events_all %}
+                        <tr>
+                            <td>{{ event.action_time }}</td>
+                            <td>{{ event.type }}</td>
+                            <td>{{ event.object_repr }}</td>
+                            <td>{{ event.description }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tfoot>
+                    <tr>
+                        <th>Время</th>
+                        <th>Тип</th>
+                        <th>Объект</th>
+                        <th>Событие</th>
+                    </tr>
+                    </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

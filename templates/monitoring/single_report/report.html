@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone=no">
+
+	<title>Отчет</title>
+
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/icon_net.png' %}" />
+<!--    <link href="{% static 'vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">-->
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        body.dimmed {
+            pointer-events: none;
+        }
+        .landscape-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 40px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            width: 90;
+        }
+        .sticky-column {
+            position: sticky;
+            left: 0;
+            background-color: #ebeef6;
+            font-weight: bold;
+            z-index: 1;
+        }
+<!--        .sticky-column:nth-child(1) {-->
+<!--            left: 0px;-->
+<!--            width: 100px;-->
+<!--        }-->
+<!--        .sticky-column:nth-child(2) {-->
+<!--            left: 100px;-->
+<!--            width: 151px;-->
+<!--        }-->
+<!--        .sticky-column:nth-child(3) {-->
+<!--            left: 251px;-->
+<!--        }-->
+
+        .back-button {
+            background-color: transparent;
+            color: gray; /* Цвет текста */
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: darkgray; /* Цвет текста при наведении */
+        }
+
+        .back-button svg {
+            margin-right: 5px;
+            fill: currentColor; /* Устанавливаем цвет SVG равным цвету текста */
+        }
+    </style>
+
+</head>
+<body data-theme-mode="light">
+    <div class="landscape-warning" id="warning">
+        Пожалуйста, переверните устройство
+    </div>
+    <div id="preloader" style="z-index: 3;">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <button onclick="goBack()" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <polygon points="0 0 24 0 24 24 0 24"/>
+                <rect fill="gray" opacity="0.3" transform="translate(12.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-12.000000, -12.000000) " x="11" y="5" width="2" height="14" rx="1"/>
+                <path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="darkgray" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/>
+            </g>
+        </svg>
+        Вернуться назад
+    </button>
+    <div style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 10px;">
+        <h1 style="margin-bottom: 10px;">
+            {{ html_name_report }}
+        </h1>
+        <button type="button" class="btn btn-rounded btn-success" style="margin-bottom: 20px;" onclick="sendTableData()">
+            <span class="btn-icon-left text-success">
+                <i class="fa fa-download color-success"></i>
+            </span>
+            Выгрузить
+        </button>
+<!--        <span style="color: rgba(255, 0, 0, 0.4); font-weight: bold;">-->
+<!--            Внимание: максимальное количество выгружаемых данных - 8000 записей!-->
+<!--        </span>-->
+<!--        <span style="color: rgba(0, 0, 255, 0.4); font-weight: bold; margin-bottom: 20px;">-->
+<!--            Пример: 200 принтеров со статистикой за 5 лет.-->
+<!--        </span>-->
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static 'vendor/global/global.min.js' %}"></script>
+<!--    <script src="{% static 'vendor/chart.js/Chart.bundle.min.js' %}"></script>-->
+    <script src="{% static 'js/custom.min.js' %}"></script>
+	<script src="{% static 'js/deznav-init.js' %}"></script>
+<!--	<script src="{% static 'js/dashboard/dashboard-1.js' %}"></script>-->
+<!--	<script src="{% static 'vendor/svganimation/vivus.min.js' %}"></script>-->
+<!--    <script src="{% static 'vendor/svganimation/svg.animation.js' %}"></script>-->
+<!--    <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>-->
+<!--    <script src="{% static 'js/plugins-init/datatables.init.js' %}"></script>-->
+<!--	<script src="{% static 'vendor/raphael/raphael.min.js' %} "></script>-->
+<!--    <script src="{% static 'vendor/morris/morris.min.js' %} "></script>-->
+<!--    <script src="{% static 'js/plugins-init/morris-init.js' %} "></script>-->
+<!--	<script src="{% static 'vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>-->
+<!--	<script src="{% static 'js/plugins-init/chartjs-init.js' %}"></script>-->
+    <script>
+        function checkOrientation() {
+            if (window.innerWidth < 580 && window.innerHeight > window.innerWidth) {
+                document.getElementById('warning').style.display = 'block';
+                document.body.classList.add('dimmed');
+            } else {
+                document.getElementById('warning').style.display = 'none';
+                document.body.classList.remove('dimmed');
+            }
+        }
+
+        window.addEventListener('resize', checkOrientation);
+        checkOrientation();
+
+<!--        function sendTableData() {-->
+<!--            const tableHTML = document.querySelector('table').outerHTML;-->
+<!--            const reportName = document.querySelector('h1').innerText;-->
+
+<!--            const blob = new Blob([tableHTML], { type: 'text/html' });-->
+<!--            const fileSize = blob.size;-->
+
+<!--            fetch('/export_report/', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json',-->
+<!--                    'X-CSRFToken': getCookie('csrftoken')-->
+<!--                },-->
+<!--                body: JSON.stringify({ table: tableHTML, name: reportName, size: fileSize })-->
+<!--            })-->
+<!--            .then(response => response.blob())-->
+<!--            .then(blob => {-->
+<!--                const url = window.URL.createObjectURL(blob);-->
+<!--                const a = document.createElement('a');-->
+<!--                a.style.display = 'none';-->
+<!--                a.href = url;-->
+<!--                a.download = reportName + '.xlsx';-->
+<!--                document.body.appendChild(a);-->
+<!--                a.click();-->
+<!--                window.URL.revokeObjectURL(url);-->
+<!--            })-->
+<!--            .catch(error => console.error('Ошибка:', error));-->
+<!--        }-->
+
+        async function sendTableData() {
+            const tableHTML = document.querySelector('table').outerHTML;
+            const reportName = document.querySelector('h1').innerText;
+            const blob = new Blob([tableHTML], { type: 'text/html' });
+            const fileSize = blob.size;
+
+            const chunkSize = 2000000;
+            const chunks = [];
+            for (let i = 0; i < fileSize; i += chunkSize) {
+                chunks.push(tableHTML.slice(i, i + chunkSize));
+            }
+
+            let lastResponseBlob;
+
+            // Используем Promise.all для ожидания всех запросов
+            await Promise.all(chunks.map((chunk, index) => {
+                return fetch('/export_report/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ table: chunk, name: reportName, part: index, totalParts: chunks.length })
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    lastResponseBlob = blob; // Сохраняем только последний ответ
+                })
+                .catch(error => console.error("Ошибка:", error));
+            }));
+
+            // Обработка только последнего ответа
+            if (lastResponseBlob) {
+                const url = window.URL.createObjectURL(lastResponseBlob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = reportName + '.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+        }
+
+
+        function goBack() {
+            window.history.back();
+            window.close();
+        }
+    </script>
+<!--&lt;!&ndash;&ndash;&gt; На всякий случай если сломается-->
+<!--    <script>-->
+<!--        function sendTableData() {-->
+<!--            const tableHTML = document.querySelector('table').outerHTML;-->
+
+<!--            fetch('/export_report/', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json',-->
+<!--                    'X-CSRFToken': getCookie('csrftoken')-->
+<!--                },-->
+<!--                body: JSON.stringify({ table: tableHTML })-->
+<!--            })-->
+<!--            .then(response => response.blob())-->
+<!--            .then(blob => {-->
+<!--                const url = window.URL.createObjectURL(blob);-->
+<!--                const a = document.createElement('a');-->
+<!--                a.style.display = 'none';-->
+<!--                a.href = url;-->
+<!--                a.download = 'Отчет.xlsx';-->
+<!--                document.body.appendChild(a);-->
+<!--                a.click();-->
+<!--                window.URL.revokeObjectURL(url);-->
+<!--            })-->
+<!--            .catch(error => console.error('Ошибка:', error));-->
+<!--        }-->
+
+<!--        function goBack() {-->
+<!--            window.history.back();-->
+<!--            window.close();-->
+<!--        }-->
+<!--    </script>-->
+
+</body>
+</html>

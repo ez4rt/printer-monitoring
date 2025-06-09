@@ -1,0 +1,36 @@
+{% extends 'monitoring/single_report/report.html' %}
+
+{% block content %}
+<div style="overflow-x: auto;">
+    <table border="1">
+        <thead>
+            <tr>
+                <th class="sticky-column">Модель</th>
+                <th class="sticky-column">Расположение</th>
+                <th class="sticky-column">IP-адрес</th>
+                <th>Общее количество страниц</th>
+                <th>Количество страниц печати</th>
+                <th>Количество копий</th>
+                <th>Количество отсканированных страниц</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                {% for printer in printers %}
+                    <tr>
+                        <td class="sticky-column">{{ printer.printer.model }}</td>
+                        <td class="sticky-column">{{ printer.printer.get_subnet_name }}/{{ printer.printer.location }}</td>
+                        <td class="sticky-column">{{ printer.printer.ip_address.address }}</td>
+                        {% for stat in printer.stats %}
+                            <td>{{ stat.page }}</td>
+                            <td>{{ stat.print }}</td>
+                            <td>{{ stat.copies }}</td>
+                            <td>{{ stat.scan }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

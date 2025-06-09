@@ -1,0 +1,38 @@
+{% extends 'monitoring/single_report/report.html' %}
+
+{% block content %}
+<div style="overflow-x: auto;">
+    <table border="1" style="overflow: auto;">
+        <thead>
+            <tr>
+                <th class="sticky-column">Принтер (IP-адрес), Расположение</th>
+                <th>Всего</th>
+                {% for date in dates %}
+                    <th>{{ date }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="sticky-column" style="text-align: right;">Всего страниц: </td>
+                <td><div style="opacity: 0.75;"><b>{{ total_sum }}</b></div></td>
+                {% for stats in total_stats %}
+                    <td><div style="opacity: 0.75;"><b>{{ stats.total_pages }}</b></div></td>
+                {% endfor %}
+            </tr>
+                {% for printer in printers %}
+                    <tr>
+                        <td class="sticky-column">{{ printer.printer.model }} ({{ printer.printer.ip_address.address }}), {{ printer.printer.get_subnet_name }}/{{ printer.printer.location }}</td>
+                        <td><div style="opacity: 0.75;"><b>{{ printer.total_page }}</b></div></td>
+                        {% for page in printer.page %}
+                            <td>
+                                {{ page }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

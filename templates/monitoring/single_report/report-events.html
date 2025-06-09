@@ -1,0 +1,27 @@
+{% extends 'monitoring/single_report/report.html' %}
+
+{% block content %}
+<div style="overflow-x: auto;">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Время события</th>
+                <th>Тип</th>
+                <th>Объект</th>
+                <th>Событие</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for event in events_all %}
+                <tr>
+                    <td>{{ event.action_time }}</td>
+                    <td>{{ event.type }}</td>
+                    <td>{{ event.object_repr }}</td>
+                    <td>{{ event.description }}</td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

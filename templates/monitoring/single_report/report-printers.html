@@ -1,0 +1,51 @@
+{% extends 'monitoring/single_report/report.html' %}
+
+{% block content %}
+<div style="overflow-x: auto;">
+    <table border="1">
+        <thead>
+            <tr>
+                <th class="sticky-column">Модель</th>
+                <th class="sticky-column">Расположение</th>
+                <th class="sticky-column">IP-адрес</th>
+                <th>Серийный номер</th>
+                <th>Инвентарный номер</th>
+                <th>Дата ввода</th>
+                <th>Статус</th>
+                <th>Архив</th>
+                <th>Расходные материалы</th>
+                <th>Комментарий</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for printer, supply_list in printers.items %}
+            <tr>
+                <td class="sticky-column">{{ printer.model }}</td>
+                <td class="sticky-column">{{ printer.get_subnet_name }}/{{ printer.location }}</td>
+                <td class="sticky-column">{{ printer.ip_address.address }}</td>
+                <td>{{ printer.serial_number }}</td>
+                <td>{{ printer.inventory_number }}</td>
+                <td>{{ printer.date_of_commission }}</td>
+                <td>{{ printer.get_is_active }}</td>
+                <td>{{ printer.get_is_archived }}</td>
+                <td>
+                    <ul>
+                        {% for supply in supply_list %}
+                            {% for key, value in supply.items %}
+                                {% if key == 'No' %}
+                                    <li>{{ value }}</li>
+                                {% else %}
+                                    <li>{{ key }} - Остаток: {{ value }}%</li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ printer.comment }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

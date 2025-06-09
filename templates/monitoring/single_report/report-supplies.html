@@ -1,0 +1,45 @@
+{% extends 'monitoring/single_report/report.html' %}
+
+{% block content %}
+<div style="overflow-x: auto;">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Расходный материал</th>
+                {% for supp in qty_supplies %}
+                <td>{{ supp.supply }} {{ supp.supply__name }}</td>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Количество</th>
+                {% for supp in qty_supplies %}
+                <td>{{ supp.total_time_change }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th class="sticky-column">Принтер (IP-адрес), Расположение</th>
+                {% for date in dates %}
+                    <th>{{ date }}</th>
+                {% endfor %}
+            </tr>
+        </tbody>
+        <tbody>
+                {% for printer in printers %}
+                    <tr>
+                        <td class="sticky-column">{{ printer.printer.model }} ({{ printer.printer.ip_address.address }}), {{ printer.printer.get_subnet_name }}/{{ printer.printer.location }}</td>
+                        {% for change in printer.changes %}
+                            <td>
+                                {{ change }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'registration/template.html' %}
+{% load widget_tweaks %}
+{% block title %}Авторизация - АИС Мониторинг принтеров{% endblock %}
+
+{% block content %}
+<h3 class="text-center mb-3">АИС Мониторинг принтеров</h3>
+<h4 class="text-center mb-4">Авторизация</h4>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="mb-1"><strong>{{ form.username.label_tag }}</strong></label>
+        {{ form.username|add_class:"form-control"|attr:"placeholder:username" }}
+    </div>
+    <div class="form-group">
+        <label class="mb-1"><strong>{{ form.password.label_tag }}</strong></label>
+        {{ form.password|add_class:"form-control" }}
+    </div>
+    {% if form.errors %}
+      <p class="text-danger">Неправильное имя пользователя или пароль.</p>
+    {% endif %}
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+</form>
+{% endblock %}
+

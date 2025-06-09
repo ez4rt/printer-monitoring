@@ -1,0 +1,88 @@
+{% for subnet in subnet_printer_count %}
+<li>
+    <a class="has-arrow" href="{% static 'javascript:void()' %}">
+        <span class="nav-text">{{ subnet.area_name }}</span>
+        <span class="badge badge-xs badge-light">{{ subnet.printer_count }}</span>
+    </a>
+    <ul aria-expanded="false">
+        {% for stamp in unique_stamps %}
+        {% if stamp.ip_address__subnet__name == subnet.name %}
+        <li>
+            <a class="has-arrow" href="{% static 'javascript:void()' %}">{{ stamp.model__stamp__name }}</a>
+            <ul aria-expanded="false">
+                {% for printer in printers %}
+                {% if printer.model.stamp.name == stamp.model__stamp__name
+                and printer.ip_address.subnet.name == subnet.name %}
+                <li>
+                    <a href={% url "monitoring:printer" printer.id %}>
+                    {{ printer.model.name }} - {{ printer.location.cabinet.number }}/{{printer.location.department.name}}
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</li>
+{% endfor %}
+
+<!DOCTYPE html>
+<head>
+<!--Метаинформация о документе, ссылки на стили-->
+</head>
+<body>
+<!--Основная часть документа-->
+    <div id="preloader">
+<!--Анимации загрузки-->
+    </div>
+    <div id="main-wrapper">
+<!--Основной контейнер-->
+        <div class="nav-header">
+<!--Навигационное меню, для размешщения логотипа сайта в заголовке и переадресации на главную страницу-->
+        </div>
+        <div class="fixed-content-box">
+<!--Боковая панель-->
+        </div>
+        <div class="header">
+<!--Заголовок страницы-->
+        </div>
+        <div class="deznav">
+<!-- Дополнительные элементы навигации в заголовке, для управления темой сайта и управления учетной записью-->
+        </div>
+        <div class="content-body">
+<!--Основной контент страницы-->
+        </div>
+    </div>
+    <script>
+<!--Блок для размещения JavaScript-кода-->
+    </script>
+</body>
+
+
+<table id="example" class="display" style="min-width: 1465px;">
+    <thead>
+<!--Заголовки таблицы-->
+    </thead>
+    <tbody>
+    {% for printer_supply in printers_with_black_cart %}
+    <tr>
+        <td>
+            <a href={% url "monitoring:printer" printer_supply.printer.id %}> {{ printer_supply.printer.model }}</a>
+        </td>
+        <td>{{ printer_supply.printer.ip_address }}</td>
+        <td>{{ printer_supply.printer.get_is_active }}</td>
+        <td>{{ printer_supply.printer.get_subnet_name }}</td>
+        <td>{{ printer_supply.printer.location.cabinet.number }}</td>
+        <td>{{ printer_supply.printer.location.department }}</td>
+        <td>{{ printer_supply.remaining_supply_percentage }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+<!--Подвал таблицы с заголовками-->
+    </tfoot>
+</table>
+
+

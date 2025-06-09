@@ -1,0 +1,189 @@
+{% extends 'index.html' %}
+
+{% block title %}Отчеты{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">СПИСОК ОТЧЕТОВ</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-list-group">
+                        <div class="row">
+                            <div class="col-lg-6 col-xl-3">
+                                <div class="list-group mb-4 " id="list-tab" role="tablist">
+                                    <a class="list-group-item list-group-item-action active" id="list-finished-reports-list" data-toggle="list" href="#list-finished-reports" role="tab">Готовые отчеты</a>
+                                    <a class="list-group-item list-group-item-action" id="list-printers-report-list" data-toggle="list" href="#list-printers-report" role="tab">Информация о принтерах</a>
+                                    <a class="list-group-item list-group-item-action" id="list-statistics-report-list" data-toggle="list" href="#list-statistics-report" role="tab">Использование принтеров</a>
+                                    <a class="list-group-item list-group-item-action" id="list-day-report-list" data-toggle="list" href="#list-day-report" role="tab">Ежедневная статистика</a>
+                                    <a class="list-group-item list-group-item-action" id="list-month-report-list" data-toggle="list" href="#list-month-report" role="tab">Ежемесячная статистика</a>
+                                    <a class="list-group-item list-group-item-action" id="list-supplies-report-list" data-toggle="list" href="#list-supplies-report" role="tab">Расходные материалы</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xl-9">
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="list-finished-reports">
+                                        <h4 class="mb-4">Готовые отчеты</h4>
+                                        <div id="accordion-two" class="accordion accordion-primary-solid">
+                                            <div class="accordion__item">
+                                                <div class="accordion__header collapsed" data-toggle="collapse" data-target="#bordered_collapseOne">
+                                                    <span class="accordion__header--text">Отчеты за всё время</span>
+                                                    <span class="accordion__header--indicator"></span>
+                                                </div>
+                                                <div id="bordered_collapseOne" class="collapse accordion__body" data-parent="#accordion-two">
+                                                    <div class="accordion__body--text">
+                                                        В данном разделе представлены отчеты содержащие информацию за весь период функционирования системы.
+                                                    </div>
+                                                    <ul class="link-list">
+                                                        <li><a href="#" onclick="openTab('page', 'all-time')">Общее количество страниц</a></li>
+                                                        <li><a href="#" onclick="openTab('print', 'all-time')">Количество страниц печати</a></li>
+                                                        <li><a href="#" onclick="openTab('copies', 'all-time')">Количество копий</a></li>
+                                                        <li><a href="#" onclick="openTab('scan', 'all-time')">Количество отсканированных страниц</a></li>
+                                                        <li><a href="#" onclick="openTab('print-log', 'all-time')">Журнал печати</a></li>
+                                                        <li><a href="#" onclick="openTab('event-log', 'all-time')">Журнал событий</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="accordion__item">
+                                                <div class="accordion__header collapsed" data-toggle="collapse" data-target="#bordered_collapseTwo">
+                                                    <span class="accordion__header--text">Отчеты за последние 30 дней</span>
+                                                    <span class="accordion__header--indicator"></span>
+                                                </div>
+                                                <div id="bordered_collapseTwo" class="collapse accordion__body" data-parent="#accordion-two">
+                                                    <div class="accordion__body--text">
+                                                        В данном разделе представлены отчеты содержащие информацию за последние 30 дней.
+                                                    </div>
+                                                    <ul class="link-list">
+                                                        <li><a href="#" onclick="openTab('page', '30days')">Общее количество страниц</a></li>
+                                                        <li><a href="#" onclick="openTab('print', '30days')">Количество страниц печати</a></li>
+                                                        <li><a href="#" onclick="openTab('copies', '30days')">Количество копий</a></li>
+                                                        <li><a href="#" onclick="openTab('scan', '30days')">Количество отсканированных страниц</a></li>
+                                                        <li><a href="#" onclick="openTab('print-log', '30days')">Журнал печати</a></li>
+                                                        <li><a href="#" onclick="openTab('event-log', '30days')">Журнал событий</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="accordion__item">
+                                                <div class="accordion__header collapsed" data-toggle="collapse" data-target="#bordered_collapseThree">
+                                                    <span class="accordion__header--text">Отчеты за последние 7 дней</span>
+                                                    <span class="accordion__header--indicator"></span>
+                                                </div>
+                                                <div id="bordered_collapseThree" class="collapse accordion__body" data-parent="#accordion-two">
+                                                    <div class="accordion__body--text">
+                                                        В данном разделе представлены отчеты содержащие информацию за последние 7 дней.
+                                                    </div>
+                                                    <ul class="link-list">
+                                                        <li><a href="#" onclick="openTab('page', '7days')">Общее количество страниц</a></li>
+                                                        <li><a href="#" onclick="openTab('print', '7days')">Количество страниц печати</a></li>
+                                                        <li><a href="#" onclick="openTab('copies', '7days')">Количество копий</a></li>
+                                                        <li><a href="#" onclick="openTab('scan', '7days')">Количество отсканированных страниц</a></li>
+                                                        <li><a href="#" onclick="openTab('print-log', '7days')">Журнал печати</a></li>
+                                                        <li><a href="#" onclick="openTab('event-log', '7days')">Журнал событий</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="list-printers-report">
+                                        <h4 class="mb-4">Информационный отчет о принтерах</h4>
+                                        <p>
+                                            Сгенерируйте отчет в котором будет собрана вся необходимая информация о принтерах и их расходных материалах.
+                                        </p>
+                                        <form method="post" id="printers_report" target="_blank">
+                                            {% csrf_token %}
+                                            {{ form_printers.as_p }}
+                                            <input type="submit" value="Сгенерировать отчет" name="printers_report" class="btn light btn-primary">
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="list-statistics-report">
+                                        <h4 class="mb-4">Отчет об использовании принтеров</h4>
+                                        <p>
+                                            Сгенерируйте отчет в котором будет собрана информация о загруженности принтеров на необходимую дату.
+                                        </p>
+
+                                        <form method="post" id="statistics_report" target="_blank">
+                                            {% csrf_token %}
+                                            {{ form_statistics.as_p }}
+                                            <input type="submit" value="Сгенерировать отчет" name="statistics_report" class="btn light btn-primary">
+                                        </form>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="list-day-report" role="tabpanel">
+                                        <h4 class="mb-4">Отчет об ежедневной статистике</h4>
+                                        <p>
+                                            Сгенерируйте отчет в котором будет собрана информация об ежедневном использовании принтеров.
+                                        </p>
+                                        <form method="post" id="days_report" target="_blank">
+                                            {% csrf_token %}
+                                            {{ form_day.as_p }}
+                                            <input type="submit" value="Сгенерировать отчет" name="days_report" class="btn light btn-primary">
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="list-month-report">
+                                        <h4 class="mb-4">Отчет об ежемесячной статистике</h4>
+                                        <p>
+                                            Сгенерируйте отчет в котором будет собрана информация об ежемесячном использовании принтеров.
+                                        </p>
+                                        <form method="post" id="months_report" target="_blank">
+                                            {% csrf_token %}
+                                            {{ form_month.as_p }}
+                                            <input type="submit" value="Сгенерировать отчет" name="months_report" class="btn light btn-primary">
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="list-supplies-report">
+                                        <h4 class="mb-4">Отчет о замене расходных материалов</h4>
+                                        <p>
+                                            Сгенерируйте отчет в котором будет собрана информация о замене расходных материалов.
+                                        </p>
+                                        <form method="post" id="supplies_report" target="_blank">
+                                            {% csrf_token %}
+                                            {{ form_supplies.as_p }}
+                                            <input type="submit" value="Сгенерировать отчет" name="supplies_report" class="btn light btn-primary">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script>
+    document.getElementById('date_start_month').addEventListener('change', function() {
+        var startDate = new Date(this.value + '-01');
+        var year = startDate.getFullYear();
+        var month = startDate.getMonth() + 1;
+        if (month < 10) month = '0' + month;
+        var minDate = year + '-' + month;
+        document.getElementById('date_end_month').setAttribute('min', minDate);
+    });
+
+    document.getElementById('date_start_day').addEventListener('change', function() {
+        var startDate = new Date(this.value);
+        var year = startDate.getFullYear();
+        var month = startDate.getMonth() + 1;
+        var day = startDate.getDate();
+        if (month < 10) month = '0' + month;
+        if (day < 10) day = '0' + day;
+        var minDate = year + '-' + month + '-' + day;
+        document.getElementById('date_end_day').setAttribute('min', minDate);
+    });
+
+    document.getElementById('supplies_date_start').addEventListener('change', function() {
+        var startDate = new Date(this.value);
+        var year = startDate.getFullYear();
+        var month = startDate.getMonth() + 1;
+        var day = startDate.getDate();
+        if (month < 10) month = '0' + month;
+        if (day < 10) day = '0' + day;
+        var minDate = year + '-' + month + '-' + day;
+        document.getElementById('supplies_date_end').setAttribute('min', minDate);
+    });
+</script>
